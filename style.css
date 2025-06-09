@@ -1,4 +1,3 @@
-
 body {
   font-family: Arial, sans-serif;
   background-color: #f3f3f3;
@@ -14,7 +13,6 @@ body {
   background: white;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 input[type="text"] {
@@ -29,7 +27,7 @@ button {
   padding: 10px 15px;
   font-size: 1rem;
   border: none;
-  background-color: #337733;
+  background-color: #373;
   color: white;
   cursor: pointer;
   border-radius: 4px;
@@ -60,8 +58,6 @@ button:hover {
 .profile-details {
   flex-grow: 1;
 }
-
-
 
 .profile-details p {
   margin: 5px 0;
