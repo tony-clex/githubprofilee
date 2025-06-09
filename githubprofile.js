@@ -1,16 +1,16 @@
-const searchBtn = document.getElementById("search-button")
-const usernameInput = document.getElementById("usernameInput")
-const profileDiv = document.getElementById("profile")
+const searchBtn = document.getElementById('search-button')
+const usernameInput = document.getElementById('usernameInput')
+const profileDiv = document.getElementById('profile')
 
-async function fetchProfile() {
+async function fetchProfile () {
   const username = usernameInput.value.trim()
   if (!username) {
     profileDiv.innerHTML =
       '<p class="error">Please enter a GitHub username.</p>'
-    return;
+    return
   }
 
-  profileDiv.innerHTML = "<p>Loading...</p>"
+  profileDiv.innerHTML = '<p>Loading...</p>'
 
   try {
     const response = await fetch(`https://api.github.com/users/${username}`)
@@ -49,10 +49,10 @@ async function fetchProfile() {
   }
 }
 
-searchBtn.addEventListener("click", fetchProfile)
+searchBtn.addEventListener('click', fetchProfile)
 
-usernameInput.addEventListener("keyup", (event) => {
-  if (event.key === "Enter") {
+usernameInput.addEventListener('keyup', (event) => {
+  if (event.key === 'Enter') {
     fetchProfile()
   }
 })
