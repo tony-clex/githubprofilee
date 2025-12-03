@@ -1,58 +1,94 @@
-const searchBtn = document.getElementById('search-button')
-const usernameInput = document.getElementById('usernameInput')
-const profileDiv = document.getElementById('profile')
+const searchBtn = document.getElementById('search-button');
+
+const usernameInput = document.getElementById('usernameInput');
+
+const profileDiv = document.getElementById('profile');
+
+function showMessage(message, isError = false) {
+  profileDiv.innerHTML = '';
+  const p = document.createElement('p');
+  p.textContent = message;
+  if (isError) p.classList.add('error');
+  profileDiv.appendChild(p);
+}
+
+function renderProfile(data) {
+  profileDiv.innerHTML = '';
+
+  const card = document.createElement('div');
+
+  card.className = 'profile-card';
+
+  const img = document.createElement('img');
+  img.src = data.avatar_url;
+  img.alt = `${data.login}'s avataar`;
+
+  const details = document.createElement('div');
+  details.className = 'profile-details';
+
+  const name = document.createElement('h2');
+  name.textContent = data.name || data.login;
+
+  const stats = document.createElement('p');
+  stats.innerHTML = `<strong>Followers:</strong> ${data.followers} | <strong>Following:</strong> ${data.following}`;
+
+  const repos = document.createElement('p');
+  repos.innerHTML = `<strong>Public Repos:</strong> ${data.public_repos}`;
+
+  const link = document.createElement('a');
+  link.href = data.html_url;
+
+  link.target = '_blank';
+
+  link.rel = 'noopener noreferrer';
+
+  link.textContent = 'View GitHub Profile';
+
+  details.appendChild(name);
+  details.appendChild(stats);
+  details.appendChild(repos);
+  details.appendChild(link);
+
+  card.appendChild(img);
+  card.appendChild(details);
+
+  profileDiv.appendChild(card);
+}
 
 async function fetchProfile() {
-  const username = usernameInput.value.trim()
+  const username = usernameInput.value.trim();
+
   if (!username) {
-    profileDiv.innerHTML =
-      '<p class="error">Please enter a GitHub username.</p>'
-    return
+    showMessage('Please enter a GitHub username.', true);
+    return;
   }
 
-  profileDiv.innerHTML = '<p>Loading...</p>'
+  showMessage('Loading...');
 
   try {
-    const response = await fetch(`https://api.github.com/users/${username}`)
+    const response = await fetch(`https://api.github.com/users/${username}`);
 
     if (!response.ok) {
       if (response.status === 404) {
-        profileDiv.innerHTML =
-          '<p class="error">User not found. Please try another username.</p>'
+        showMessage('User not found. Please try another username.', true);
       } else {
-        profileDiv.innerHTML =
-          '<p class="error">Error fetching data. Please try again later.</p>'
+        showMessage('Error fetching data. Please try again later.', true);
       }
-      return
+      return;
     }
 
-    const data = await response.json()
+    const data = await response.json();
+    renderProfile(data);
 
-    profileDiv.innerHTML = `
-      <div class="profile-card">
-        <img src="${data.avatar_url}" alt="${data.login}'s avatar" />
-        <div class="profile-details">
-          <h2>${data.name ? data.name : data.login}</h2>
-          <p><strong>Followers:</strong> ${
-            data.followers
-          } | <strong>Following:</strong> ${data.following}</p>
-          <p><strong>Public Repos:</strong> ${data.public_repos}</p>
-          <a href="${
-            data.html_url
-          }" target="_blank" rel="noopener noreferrer">View GitHub Profile</a>
-        </div>
-      </div>
-    `
   } catch (error) {
-    profileDiv.innerHTML =
-      '<p class="error">Network error. Please check your connection and try again.</p>';
+    showMessage('Network error. Please check your connection and try again.', true);
   }
 }
 
-searchBtn.addEventListener('click', fetchProfile)
+searchBtn.addEventListener('click', fetchProfile);
 
 usernameInput.addEventListener('keyup', (event) => {
   if (event.key === 'Enter') {
-    fetchProfile()
+    fetchProfile();
   }
-})
+});
