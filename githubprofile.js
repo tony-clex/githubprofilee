@@ -2,7 +2,7 @@ const searchBtn = document.getElementById('search-button')
 const usernameInput = document.getElementById('usernameInput')
 const profileDiv = document.getElementById('profile')
 
-function showMessage(message, isError = false) {
+function showMessage (message, isError = false) {
   profileDiv.innerHTML = ''
   const p = document.createElement('p')
   p.textContent = message
@@ -10,7 +10,7 @@ function showMessage(message, isError = false) {
   profileDiv.appendChild(p)
 }
 
-function renderProfile(data) {
+function renderProfile (data) {
   profileDiv.innerHTML = ''
 
   const card = document.createElement('div')
@@ -49,7 +49,7 @@ function renderProfile(data) {
   profileDiv.appendChild(card)
 }
 
-async function fetchProfile() {
+async function fetchProfile () {
   const username = usernameInput.value.trim()
 
   if (!username) {
