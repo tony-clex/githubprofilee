@@ -1,5 +1,5 @@
 const searchBtn = document.getElementById('search-button')
-const usernameInput = document.getElementById('usernameInput')
+const usernameInput = document.getElementById('username-input')
 const profileDiv = document.getElementById('profile')
 
 function showMessage (message, isError = false) {

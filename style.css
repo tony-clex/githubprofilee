@@ -3,11 +3,9 @@ body {
   background-color: #f3f3f3;
   margin: 0;
   padding: 0;
-
   display: flex;
   justify-content: center;
   align-items: center;
-
   min-height: 100vh;
   text-align: center;
   color: #333;
@@ -16,11 +14,11 @@ body {
 .container {
   width: 100%;
   max-width: 500px;
-  background: white;
+  background: #fff;
   padding: 20px;
   border-radius: 8px;
   box-sizing: border-box;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 3px 10px rgb(0 0 0 / 10%);
 }
 
 input[type="text"] {
@@ -59,14 +57,12 @@ button:hover {
   justify-content: center;
   align-items: center;
   flex-direction: row;
-
   gap: 15px;
-  background: #ffffff;
+  background: #fff;
   padding: 15px;
   border-radius: 10px;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-
-  margin: 0 auto; 
+  box-shadow: 0 3px 10px rgb(0 0 0 / 8%);
+  margin: 0 auto;
   max-width: 350px;
 }
 
@@ -101,7 +97,6 @@ button:hover {
   color: red;
   font-weight: bold;
 }
-
 
 @media (max-width: 480px) {
   .profile-card {
