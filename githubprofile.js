@@ -3,13 +3,32 @@ document.addEventListener('DOMContentLoaded', () => {
   const usernameInput = document.getElementById('username-input')
   const profileDiv = document.getElementById('profile')
 
-  function clearProfile () {
-    while (profileDiv.firstChild) {
-      profileDiv.removeChild(profileDiv.firstChild)
+  const clearProfile = () => profileDiv.replaceChildren()
+
+  const fetchProfile = async () => {
+    const username = usernameInput.value.trim()
+    if (!username) return showMessage('Please enter a GitHub username.', true)
+
+    showMessage('Loading...')
+    try {
+      const res = await fetch(`https://api.github.com/users/${username}`)
+      if (!res.ok) {
+        if (res.status === 404) showMessage('User not found. Please try another username.', true)
+        else if (res.status === 403) showMessage('Rate limit exceeded. Please try again later.', true)
+        else showMessage('Error fetching data. Please try again later.', true)
+        return
+      }
+      renderProfile(await res.json())
+    } catch (err) {
+      console.error(err)
+      showMessage('Network error. Please check your connection.', true)
     }
   }
 
-  function showMessage (message, isError = false) {
+  searchBtn.addEventListener('click', fetchProfile)
+  usernameInput.addEventListener('keydown', e => e.key === 'Enter' && fetchProfile())
+
+  const showMessage = (message, isError = false) => {
     clearProfile()
     const p = document.createElement('p')
     p.textContent = message
@@ -17,9 +36,8 @@ document.addEventListener('DOMContentLoaded', () => {
     profileDiv.appendChild(p)
   }
 
-  function renderProfile (data) {
+  const renderProfile = data => {
     clearProfile()
-
     const card = document.createElement('div')
     card.className = 'profile-card'
 
@@ -49,43 +67,4 @@ document.addEventListener('DOMContentLoaded', () => {
     card.append(img, details)
     profileDiv.appendChild(card)
   }
-
-  async function fetchProfile () {
-    const username = usernameInput.value.trim()
-
-    if (!username) {
-      showMessage('Please enter a GitHub username.', true)
-      return
-    }
-
-    showMessage('Loading...')
-
-    try {
-      const response = await fetch(`https://api.github.com/users/${username}`)
-
-      if (!response.ok) {
-        if (response.status === 404) {
-          showMessage('User not found. Please try another username.', true)
-        } else if (response.status === 403) {
-          showMessage('Rate limit exceeded. Please try again later.', true)
-        } else {
-          showMessage('Error fetching data. Please try again later.', true)
-        }
-        return
-      }
-
-      const data = await response.json()
-      renderProfile(data)
-    } catch {
-      showMessage('Network error. Please check your connection.', true)
-    }
-  }
-
-  searchBtn.addEventListener('click', fetchProfile)
-
-  usernameInput.addEventListener('keydown', event => {
-    if (event.key === 'Enter') {
-      fetchProfile()
-    }
-  })
 })
