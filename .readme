@@ -1,0 +1,34 @@
+## GitHub Profile Viewer
+
+### description
+A sleek, responsive web application to search and explore GitHub profiles.
+Easily view user information, repositories, and GitHub stats in a clean and intuitive interface. Perfect for developers, recruiters, and GitHub enthusiasts.
+
+ # Features
+
+Search GitHub Users by username.
+
+View Profile Details: profile picture, bio, location, followers, following, and public repositories.
+
+Explore Repositories: repository name, description, stars, forks, and direct GitHub links.
+
+Responsive Design: works on desktop, tablet, and mobile.
+
+Dark/Light Mode toggle (optional).
+
+Error Handling: handles invalid usernames and API errors gracefully.
+
+ Technologies Used
+
+Frontend: HTML, CSS, JavaScript
+
+API: GitHub REST API
+
+Deployment: GitHub Pages
+
+# Clone the repository
+git clone https://github.com/tony-clex/githubprofilee.git
+
+# Navigate to project folder
+cd githubprofilee
+
